@@ -52,10 +52,10 @@ for i in "${!steps[@]}"; do
 
   case $i in
     0)
-      sudo apt update -qq > /dev/null && sudo apt upgrade -y -qq > /dev/null
+      sudo apt-get update -qq > /dev/null && sudo apt-get upgrade -y -qq > /dev/null
       ;;
     1)
-      sudo apt install -y -qq python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt > /dev/null
+      sudo apt-get install -y -qq python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt > /dev/null
       ;;
     2)
       sudo timedatectl set-timezone Europe/Berlin > /dev/null
@@ -68,7 +68,7 @@ for i in "${!steps[@]}"; do
       echo "deb [arch=all] https://weewx.com/apt/python3 buster main" | sudo tee /etc/apt/sources.list.d/weewx.list > /dev/null
       ;;
     5)
-      sudo apt update -qq > /dev/null && sudo apt install -y weewx > /dev/null
+      sudo apt-get update -qq > /dev/null && sudo apt-get install -y weewx
       ;;
     6)
       wget -q https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip > /dev/null
