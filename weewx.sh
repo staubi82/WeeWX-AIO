@@ -52,41 +52,42 @@ for i in "${!steps[@]}"; do
 
   case $i in
     0)
-      sudo apt update && sudo apt upgrade -y
+      sudo apt update -qq && sudo apt upgrade -y -qq
       ;;
     1)
-      sudo apt install -y python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt
+      sudo apt install -y -qq python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt
       ;;
     2)
       sudo timedatectl set-timezone Europe/Berlin
       ;;
     3)
-      sudo locale-gen de_DE.UTF-8
-      sudo update-locale LANG=de_DE.UTF-8
+      sudo locale-gen de_DE.UTF-8 > /dev/null
+      export LANG=de_DE.UTF-8
+      sudo update-locale LANG=de_DE.UTF-8 > /dev/null || echo "Fehler: Ungültige Locale-Einstellungen"
       ;;
     4)
       wget -qO - https://weewx.com/keys.html | sudo gpg --dearmor --output /etc/apt/trusted.gpg.d/weewx.gpg
-      echo "deb [arch=all] https://weewx.com/apt/python3 buster main" | sudo tee /etc/apt/sources.list.d/weewx.list
+      echo "deb [arch=all] https://weewx.com/apt/python3 buster main" | sudo tee /etc/apt/sources.list.d/weewx.list > /dev/null
       ;;
     5)
-      DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt install -y weewx
+      DEBIAN_FRONTEND=noninteractive sudo apt update -qq && sudo apt install -y -qq weewx
       ;;
     6)
-      wget https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip
+      wget -q https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip
       sudo weectl extension install gw1000.zip -y
       ;;
     7)
-      wget https://github.com/poblabs/weewx-belchertown/releases/download/weewx-belchertown-1.3.1/weewx-belchertown-release.1.3.1.tar.gz
+      wget -q https://github.com/poblabs/weewx-belchertown/releases/download/weewx-belchertown-1.3.1/weewx-belchertown-release.1.3.1.tar.gz
       sudo weectl extension install weewx-belchertown-release.1.3.1.tar.gz -y
       ;;
     8)
-      wget -O weewx-mqtt.zip https://github.com/matthewwall/weewx-mqtt/archive/master.zip
+      wget -q -O weewx-mqtt.zip https://github.com/matthewwall/weewx-mqtt/archive/master.zip
       sudo weectl extension install weewx-mqtt.zip -y
       ;;
     9)
-      wget -O "/tmp/weewx-wdc.zip" https://github.com/Daveiano/weewx-wdc/releases/download/v3.5.1/weewx-wdc-v3.5.1.zip
+      wget -q -O "/tmp/weewx-wdc.zip" https://github.com/Daveiano/weewx-wdc/releases/download/v3.5.1/weewx-wdc-v3.5.1.zip
       mkdir -p /tmp/weewx-wdc/
-      unzip /tmp/weewx-wdc.zip -d /tmp/weewx-wdc/
+      unzip -qq /tmp/weewx-wdc.zip -d /tmp/weewx-wdc/
       sudo weectl extension install -y /tmp/weewx-wdc/
       ;;
     10)
