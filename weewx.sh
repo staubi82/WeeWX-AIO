@@ -63,7 +63,8 @@ for i in "${!steps[@]}"; do
     3)
       sudo locale-gen de_DE.UTF-8 > /dev/null
       sudo locale-gen en_US.UTF-8 > /dev/null
-      sudo update-locale LANG=de_DE.UTF-8 LC_ALL=de_DE.UTF-8 > /dev/null
+      export LANG=de_DE.UTF-8
+      sudo update-locale LANG=de_DE.UTF-8 > /dev/null
       if ! locale -a | grep -q "de_DE.UTF-8"; then
         echo "Fehler: Die Locale 'de_DE.UTF-8' konnte nicht generiert werden."
         exit 1
