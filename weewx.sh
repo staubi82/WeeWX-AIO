@@ -52,45 +52,45 @@ for i in "${!steps[@]}"; do
 
   case $i in
     0)
-      sudo apt update -qq && sudo apt upgrade -y -qq
+      sudo apt update -qq > /dev/null && sudo apt upgrade -y -qq > /dev/null
       ;;
     1)
-      sudo apt install -y -qq python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt
+      sudo apt install -y -qq python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt > /dev/null
       ;;
     2)
-      sudo timedatectl set-timezone Europe/Berlin
+      sudo timedatectl set-timezone Europe/Berlin > /dev/null
       ;;
     3)
-      sudo sed -i 's/^# *de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen && sudo update-locale LANG=de_DE.UTF-8
+      sudo sed -i 's/^# *de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen > /dev/null && sudo update-locale LANG=de_DE.UTF-8 > /dev/null
       ;;
     4)
-      wget -qO - https://weewx.com/keys.html | sudo gpg --dearmor --output /etc/apt/trusted.gpg.d/weewx.gpg
+      wget -qO - https://weewx.com/keys.html | sudo gpg --dearmor --output /etc/apt/trusted.gpg.d/weewx.gpg > /dev/null
       echo "deb [arch=all] https://weewx.com/apt/python3 buster main" | sudo tee /etc/apt/sources.list.d/weewx.list > /dev/null
       ;;
     5)
-      sudo apt update -qq && sudo apt install -y weewx
+      sudo apt update -qq > /dev/null && sudo apt install -y weewx > /dev/null
       ;;
     6)
-      wget -q https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip
-      sudo weectl extension install gw1000.zip -y
+      wget -q https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip > /dev/null
+      sudo weectl extension install gw1000.zip -y > /dev/null
       ;;
     7)
-      wget -q https://github.com/poblabs/weewx-belchertown/releases/download/weewx-belchertown-1.3.1/weewx-belchertown-release.1.3.1.tar.gz
-      sudo weectl extension install weewx-belchertown-release.1.3.1.tar.gz -y
+      wget -q https://github.com/poblabs/weewx-belchertown/releases/download/weewx-belchertown-1.3.1/weewx-belchertown-release.1.3.1.tar.gz > /dev/null
+      sudo weectl extension install weewx-belchertown-release.1.3.1.tar.gz -y > /dev/null
       ;;
     8)
-      wget -q -O weewx-mqtt.zip https://github.com/matthewwall/weewx-mqtt/archive/master.zip
-      sudo weectl extension install weewx-mqtt.zip -y
+      wget -q -O weewx-mqtt.zip https://github.com/matthewwall/weewx-mqtt/archive/master.zip > /dev/null
+      sudo weectl extension install weewx-mqtt.zip -y > /dev/null
       ;;
     9)
-      wget -q -O "/tmp/weewx-wdc.zip" https://github.com/Daveiano/weewx-wdc/releases/download/v3.5.1/weewx-wdc-v3.5.1.zip
-      mkdir -p /tmp/weewx-wdc/
-      unzip -qq /tmp/weewx-wdc.zip -d /tmp/weewx-wdc/
-      sudo weectl extension install -y /tmp/weewx-wdc/
+      wget -q -O "/tmp/weewx-wdc.zip" https://github.com/Daveiano/weewx-wdc/releases/download/v3.5.1/weewx-wdc-v3.5.1.zip > /dev/null
+      mkdir -p /tmp/weewx-wdc/ > /dev/null
+      unzip -qq /tmp/weewx-wdc.zip -d /tmp/weewx-wdc/ > /dev/null
+      sudo weectl extension install -y /tmp/weewx-wdc/ > /dev/null
       ;;
     10)
-      sudo sed -i '/\[Service\]/a Restart=always\nRestartSec=60' /usr/lib/systemd/system/weewx.service
-      sudo systemctl daemon-reload
+      sudo sed -i '/\[Service\]/a Restart=always\nRestartSec=60' /usr/lib/systemd/system/weewx.service > /dev/null
+      sudo systemctl daemon-reload > /dev/null
       ;;
   esac
 
