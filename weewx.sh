@@ -68,7 +68,7 @@ for i in "${!steps[@]}"; do
       echo "deb [arch=all] https://weewx.com/apt/python3 buster main" | sudo tee /etc/apt/sources.list.d/weewx.list > /dev/null
       ;;
     5)
-      sudo apt-get update -qq > /dev/null && sudo apt-get install -y weewx
+      sudo apt-get update && sudo apt-get install -y weewx
       ;;
     6)
       wget -q https://github.com/gjr80/weewx-gw1000/releases/download/v0.6.3/gw1000.zip > /dev/null
