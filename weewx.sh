@@ -61,14 +61,7 @@ for i in "${!steps[@]}"; do
       sudo timedatectl set-timezone Europe/Berlin
       ;;
     3)
-      sudo locale-gen de_DE.UTF-8 > /dev/null
-      sudo locale-gen en_US.UTF-8 > /dev/null
-      export LANG=de_DE.UTF-8
-      sudo update-locale LANG=de_DE.UTF-8 > /dev/null
-      if ! locale -a | grep -q "de_DE.UTF-8"; then
-        echo "Fehler: Die Locale 'de_DE.UTF-8' konnte nicht generiert werden."
-        exit 1
-      fi
+      sudo sed -i 's/^# *de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen && sudo update-locale LANG=de_DE.UTF-8
       ;;
     4)
       wget -qO - https://weewx.com/keys.html | sudo gpg --dearmor --output /etc/apt/trusted.gpg.d/weewx.gpg
